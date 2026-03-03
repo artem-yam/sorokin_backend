@@ -1,8 +1,10 @@
 package sorokin.java.course.account;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Getter
 @Component
 public class AccountProperties {
     private final int defaultAmount;
@@ -16,11 +18,4 @@ public class AccountProperties {
         this.transferCommission = transferCommission;
     }
 
-    public int getDefaultAmount() {
-        return defaultAmount;
-    }
-
-    public double getTransferCommission() {
-        return transferCommission;
-    }
 }

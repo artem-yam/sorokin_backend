@@ -1,5 +1,6 @@
 package sorokin.java.course.operations.commands;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import sorokin.java.course.account.AccountService;
 import sorokin.java.course.console.ConsoleInput;
@@ -7,15 +8,11 @@ import sorokin.java.course.operations.ConsoleOperationType;
 import sorokin.java.course.operations.OperationCommand;
 
 @Component
+@RequiredArgsConstructor
 public class AccountWithdrawCommand implements OperationCommand {
 
     private final AccountService accountService;
     private final ConsoleInput consoleInput;
-
-    public AccountWithdrawCommand(AccountService accountService, ConsoleInput consoleInput) {
-        this.accountService = accountService;
-        this.consoleInput = consoleInput;
-    }
 
     @Override
     public void execute() {

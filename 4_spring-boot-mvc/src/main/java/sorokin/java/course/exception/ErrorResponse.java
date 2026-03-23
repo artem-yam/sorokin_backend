@@ -1,12 +1,14 @@
 package sorokin.java.course.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class ErrorResponse {
     private String message;

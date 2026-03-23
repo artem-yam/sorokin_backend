@@ -1,6 +1,5 @@
 package sorokin.java.course.model;
 
-import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +13,5 @@ public class User {
     private String name;
     private String email;
     private Integer age;
-    private List<Pet> pets;
-
-    @PostConstruct
-    void init() {
-        pets = new ArrayList<>();
-    }
+    private List<Pet> pets = new ArrayList<>();
 }

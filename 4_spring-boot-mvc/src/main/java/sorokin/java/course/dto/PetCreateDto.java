@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetDto {
-
-    @NotNull(message = "ID не должен быть null")
-    private Long id;
+public class PetCreateDto {
 
     @NotBlank(message = "Нужно задать имя питомца")
     private String name;

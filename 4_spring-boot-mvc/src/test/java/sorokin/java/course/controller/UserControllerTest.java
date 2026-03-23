@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import sorokin.java.course.dto.UserCreateDto;
 import sorokin.java.course.dto.UserDto;
 import sorokin.java.course.service.UserService;
 import tools.jackson.databind.ObjectMapper;
@@ -33,7 +34,7 @@ class UserControllerTest {
     @Test
     @SneakyThrows
     void createUserTest() {
-        var userDtoRequest = new UserDto(null, "Test user", "test_mail@gmail.com", 22, null);
+        var userDtoRequest = new UserCreateDto("Test user", "test_mail@gmail.com", 22);
         String userDtoRequestJson = objectMapper.writeValueAsString(userDtoRequest);
 
         var response = mockMvc.perform(post("/api/users")
@@ -57,7 +58,7 @@ class UserControllerTest {
     @SneakyThrows
     void getUserByIdTest() {
         var createdUser = userService.create(
-                new UserDto(null, "Test user", "test_mail@gmail.com", 22, null));
+                new UserCreateDto("Test user", "test_mail@gmail.com", 22));
 
         var userByIdJson = mockMvc.perform(get("/api/users/" + createdUser.getId()))
                 .andExpect(status().isOk())

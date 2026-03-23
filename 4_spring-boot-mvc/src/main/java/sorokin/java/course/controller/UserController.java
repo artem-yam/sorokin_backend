@@ -1,15 +1,14 @@
 package sorokin.java.course.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import sorokin.java.course.dto.UserCreateDto;
 import sorokin.java.course.dto.UserDto;
+import sorokin.java.course.exception.EntityNotFoundException;
 import sorokin.java.course.service.UserService;
-import sorokin.java.course.validation.group.OnCreate;
-import sorokin.java.course.validation.group.OnUpdate;
-
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,15 +18,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody @Validated(OnCreate.class) UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserCreateDto userDto) {
         UserDto savedUser = userService.create(userDto);
         return ResponseEntity
-                .created(URI.create("/api/users/" + savedUser.getId()))
+                .status(HttpStatus.CREATED)
                 .body(savedUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody @Validated(OnUpdate.class) UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody @Valid UserDto userDto) {
         if (!id.equals(userDto.getId())) {
             throw new IllegalArgumentException("ID в пути запроса и в теле не совпадают");
         }
@@ -38,7 +37,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         if (userService.getById(id).isEmpty()) {
-            throw new IllegalArgumentException("Пользователь не найден");
+            throw new EntityNotFoundException("Пользователь не найден");
         }
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -48,7 +47,7 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return userService.getById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() ->  new IllegalArgumentException("Пользователь не найден"));
+                .orElseThrow(() ->  new EntityNotFoundException("Пользователь не найден"));
     }
 
 

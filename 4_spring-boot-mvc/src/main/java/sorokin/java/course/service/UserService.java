@@ -2,6 +2,7 @@ package sorokin.java.course.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sorokin.java.course.dto.UserCreateDto;
 import sorokin.java.course.dto.UserDto;
 import sorokin.java.course.mapper.UserMapper;
 import sorokin.java.course.model.User;
@@ -33,7 +34,7 @@ public class UserService {
         return Optional.ofNullable(user == null ? null : userMapper.convertValue(user, UserDto.class));
     }
 
-    public UserDto create(UserDto userDto) {
+    public UserDto create(UserCreateDto userDto) {
         Long id = idGenerator.getAndIncrement();
         User newUser = userMapper.convertValue(userDto, User.class);
         newUser.setId(id);

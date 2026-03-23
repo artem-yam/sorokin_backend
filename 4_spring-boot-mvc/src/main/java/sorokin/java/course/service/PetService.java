@@ -2,6 +2,7 @@ package sorokin.java.course.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sorokin.java.course.dto.PetCreateDto;
 import sorokin.java.course.dto.PetDto;
 import sorokin.java.course.mapper.PetMapper;
 import sorokin.java.course.mapper.UserMapper;
@@ -29,7 +30,7 @@ public class PetService {
         return pet.map(value -> petMapper.convertValue(value, PetDto.class));
     }
 
-    public PetDto create(PetDto petDto) {
+    public PetDto create(PetCreateDto petDto) {
         Long id = idGenerator.getAndIncrement();
         Pet newPet = petMapper.convertValue(petDto, Pet.class);
         newPet.setId(id);

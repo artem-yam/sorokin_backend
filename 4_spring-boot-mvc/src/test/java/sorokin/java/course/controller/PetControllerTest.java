@@ -7,8 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import sorokin.java.course.dto.PetCreateDto;
 import sorokin.java.course.dto.PetDto;
-import sorokin.java.course.dto.UserDto;
+import sorokin.java.course.dto.UserCreateDto;
 import sorokin.java.course.service.PetService;
 import sorokin.java.course.service.UserService;
 import tools.jackson.databind.ObjectMapper;
@@ -35,7 +36,7 @@ class PetControllerTest {
     @SneakyThrows
     void createTest() {
         var user = userService.create(
-                new UserDto(null, "Test user", "test_mail@gmail.com", 22, null));
+                new UserCreateDto("Test user", "test_mail@gmail.com", 22));
 
         var petDtoRequest = new PetDto(null, "Test pet", user.getId());
         String petDtoRequestJson = objectMapper.writeValueAsString(petDtoRequest);
@@ -59,9 +60,9 @@ class PetControllerTest {
     @SneakyThrows
     void deleteTest() {
         var user = userService.create(
-                new UserDto(null, "Test user", "test_mail@gmail.com", 22, null));
+                new UserCreateDto("Test user", "test_mail@gmail.com", 22));
         var pet = petService.create(
-                new PetDto(null, "Test pet", user.getId()));
+                new PetCreateDto("Test pet", user.getId()));
 
         mockMvc.perform(delete("/api/pets/" + pet.getId()))
                 .andExpect(status().isNoContent())
